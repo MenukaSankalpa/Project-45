@@ -39,7 +39,7 @@ body{
 }
 .play-board .food{
     background: rgb(61, 172, 10);
-    border-radius: 50%;
+    border-radius: 2px;
 }
 .play-board .head{
     background: rgb(243, 243, 243);
