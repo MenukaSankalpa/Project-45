@@ -1,14 +1,24 @@
 const playBoard = document.querySelector(".play-board");
 
+let gameOver = false;
 let foodX , foodY;
 let snakeX = 5, snakeY = 10;
 let snakeBody = [];
 let velocityX = 0, velocityY = 0;
+let setIntervalId;
 
 const changeFoodPosition = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
     foodY = Math.floor(Math.random() * 30) + 1;
 }
+
+const handleGameOver = () => {
+    clearInterval(setIntervalId);
+    alert("Game over Press OK to play...");
+    location.reload();
+
+}
+
 
 const changeDirection = (e) => {
     if(e.key === "ArrowUp") {
@@ -28,6 +38,7 @@ const changeDirection = (e) => {
 }
 
 const initGame = () => {
+    if(gameOver) return handleGameOver();
     let htmlMarkup = `<div class="food" style="grid-area: ${foodY} / ${foodX}"></div>`;
 
     if( snakeX === foodX && snakeY === foodY) {
@@ -46,7 +57,7 @@ const initGame = () => {
     snakeY += velocityY;
 
 if(snakeX <= 0 || snakeX > 30 || snakeY <= 0 || snakeY > 30) {
-    console.log("Game over");
+    gameOver = true;
 }    
 
 for (let i = 0; i < snakeBody.length; i++) {
@@ -56,5 +67,5 @@ for (let i = 0; i < snakeBody.length; i++) {
     playBoard.innerHTML = htmlMarkup;
 }
 changeFoodPosition();
-setInterval(initGame, 125);
+setIntervalId = setInterval(initGame, 125);
 document.addEventListener("keydown", changeDirection);
